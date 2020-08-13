@@ -14,6 +14,7 @@ import io.etcd.jetcd.options.GetOption;
 import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.util.List;
@@ -34,6 +35,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since [产品/模块版本] （可选）
  */
 @Beta
+@Repository
 public class AdminClient extends EtcdClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AdminClient.class);

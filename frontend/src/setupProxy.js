@@ -1,8 +1,8 @@
 
 const { createProxyMiddleware } = require('http-proxy-middleware');
 module.exports = function(app) {
-  app.use(createProxyMiddleware('/playground', {
-    target: 'http://localhost:9002/',
+  app.use(createProxyMiddleware('/v1', {
+    target: 'http://localhost:8080/',
     // target: 'https://jansora.com/',
     changeOrigin: true,
   }));

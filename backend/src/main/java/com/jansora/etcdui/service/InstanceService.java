@@ -22,6 +22,8 @@ public class InstanceService extends BaseService {
 
     public Result findAll() {
 
+        EtcdClient adminClient = pool.getAdminClient();
+
         return adminClient.get(
                 ConstantUtils.ETCD_INSTANCE_LIST,
                 ListDirOption(ConstantUtils.ETCD_INSTANCE_LIST), Instance.class
@@ -39,6 +41,8 @@ public class InstanceService extends BaseService {
     }
 
     public Result delete(String hash) {
+        EtcdClient adminClient = pool.getAdminClient();
+
         return adminClient.delete(ConstantUtils.ETCD_INSTANCE_LIST + "/" + hash);
     }
 }

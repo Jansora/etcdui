@@ -18,29 +18,77 @@ export const StyledHeader = styled.header`
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  background: white;
+  //width: 100vw;
+  //background: white;
   z-index: 1000;
-  height: var(--header-height);
+  background: ${props => props.bootstrap ? "none" : "white" };
+  height: ${props => props.bootstrap ? "100px" : "var(--header-height)" };
+  width: ${props => props.bootstrap ? "1200px" : "100vw" };
+  margin-left: ${props => props.bootstrap ? "calc((100vw - 1200px) / 2)" : "0" };
+  //margin: 0 auto;
   padding: 0 16px;
-  box-shadow: 0 0 8px 0 rgba(0,0,0,.1);
+  box-shadow: ${props => props.bootstrap ? "none" : "0 0 8px 0 rgba(0,0,0,.1)" };
   line-height: var(--header-height);
+  a {
+      color: ${props => props.bootstrap ? "white" : "rgba(0,0,0,.87)" };
+  }
 
+  >div.left {
+    width: 400px;
+    height: ${props => props.bootstrap ? "100px" : "var(--header-height)" };
+    a.ui.header {
+      color: ${props => props.bootstrap ? "white" : "rgba(0,0,0,.87)" };
+    }
+    line-height: ${props => props.bootstrap ? "100px" : "var(--header-height)" };
+     i: hover {
+        color: var(--primary-color);
+      }
+      div.ui.breadcrumb {
+        display: inline-block;
+        line-height: var(--header-height);
+        margin: 0 0 5px 5px !important;
+        a{
+          color: #363636 !important; 
+        }
+        div.section.active {
+           a{
+           color: var(--primary-color) !important;
+          }
+        }
+      }
+  }
+  >div.middle {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+  }
+  >div.right {
+    width: 400px;
+    a {
+      //width: 100px;
+    }
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  display: flex;
+  align-items: center;
+  
+  transition: width 1000ms, height 1000ms, margin-left 1000ms;
 `;
+
 
 export const StyledHeaderLeft = styled.div`
   float: left;
+ 
 
-  a{
-    color: #363636 !important; 
-    padding: 0 10px;
-  }
-
-  a.active{
-    font-weight: bold;
-    color: var(--primary-color) !important;
+    
+  
+    //margin-bottom: 5px !important;
+    
   }
 `;
+
 
 export const StyledHeaderRight = styled.div`
   float: right;

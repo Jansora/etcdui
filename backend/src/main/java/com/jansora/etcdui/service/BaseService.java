@@ -26,7 +26,7 @@ public class BaseService extends BaseUtils {
     @Resource(type = EtcdConnectPool.class)
     protected EtcdConnectPool pool;
 
-    protected EtcdClient adminClient = pool.getAdminClient();
+    protected EtcdClient adminClient = EtcdConnectPool.adminClient;
 
 
 }

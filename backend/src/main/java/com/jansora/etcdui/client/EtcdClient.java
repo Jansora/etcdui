@@ -36,17 +36,17 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Beta
 public class EtcdClient {
 
-    private Client client;
+    protected Client client;
 
-    private KV kv;
+    protected KV kv;
 
-    private String endpoint;
+    protected String endpoint;
 
-    private static final Gson gson = new Gson();
+    protected static final Gson gson = new Gson();
 
 
     @Data
-    private class KVData implements Serializable {
+    protected class KVData implements Serializable {
         private String key;
         private Object value;
         private long version;

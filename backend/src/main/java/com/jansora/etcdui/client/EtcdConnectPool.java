@@ -48,7 +48,7 @@ public class EtcdConnectPool {
 
     private Integer size = 10;
 
-    private static final EtcdClient adminClient = new EtcdClient("http://10.243.147.87:2379");
+    public static final EtcdClient adminClient = new EtcdClient("http://10.243.147.87:2379");
 
     private final ConcurrentHashMap<String, Node> data = new ConcurrentHashMap<>();
 

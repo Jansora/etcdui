@@ -33,7 +33,8 @@ public class InstanceController extends BaseController {
     public Result insert(Instance instance) {
         return instanceService.insert(instance);
     }
-    @DeleteMapping("insert/{hash}")
+
+    @DeleteMapping("delete/{hash}")
     public Result delete(@PathVariable String hash) {
         return instanceService.delete(hash);
     }
