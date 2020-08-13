@@ -1,7 +1,25 @@
 package com.jansora.etcdui.utils;
 
 
-public class ResultUtils {
+import com.google.gson.Gson;
+import io.etcd.jetcd.ByteSequence;
+import io.etcd.jetcd.options.GetOption;
+
+import static com.google.common.base.Charsets.UTF_8;
+
+public class BaseUtils {
+
+    protected GetOption ListDirOption(String key) {
+        ByteSequence key_ = ByteSequence.from(key, UTF_8);
+        GetOption getOption = GetOption.newBuilder().withPrefix(BYTE(key)).build();
+        return getOption;
+    }
+
+    protected static ByteSequence BYTE(String key) {
+        return ByteSequence.from(key, UTF_8);
+    }
+
+
 
     public static Result FormatResult(boolean status, String message, Object data, Long total) {
         return Result.builder().status(status).message(message).data(data).total(total).build();

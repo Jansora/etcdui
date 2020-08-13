@@ -1,10 +1,9 @@
-package com.jansora.etcdui;
+package com.jansora.etcdui.controller;
 
 import com.jansora.etcdui.client.EtcdConnectPool;
 import com.jansora.etcdui.service.BaseService;
-import com.jansora.etcdui.utils.Result;
-import com.jansora.etcdui.utils.ResultUtils;
-import org.springframework.web.bind.annotation.GetMapping;
+import com.jansora.etcdui.service.InstanceService;
+import com.jansora.etcdui.utils.BaseUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,16 +21,15 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/")
-public class BaseController extends ResultUtils {
+public class BaseController extends BaseUtils {
+
     @Resource(type = EtcdConnectPool.class)
     EtcdConnectPool pool;
 
     @Resource(type = BaseService.class)
     BaseService baseService;
 
-    @GetMapping("helloworld")
-    public Result hello() {
-        String hash = Integer.toHexString(pool.hashCode());
-        return baseService.hello();
-    }
+    @Resource(type = InstanceService.class)
+    InstanceService instanceService;
+
 }

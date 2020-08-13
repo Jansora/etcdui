@@ -1,6 +1,7 @@
 package com.jansora.etcdui.service;
 
 import com.jansora.etcdui.client.EtcdClient;
+import com.jansora.etcdui.model.Instance;
 import com.jansora.etcdui.utils.ConstantUtils;
 import com.jansora.etcdui.utils.Result;
 import org.springframework.stereotype.Service;
@@ -19,17 +20,25 @@ import org.springframework.stereotype.Service;
 public class InstanceService extends BaseService {
 
 
-    public Result findAllInstances() {
+    public Result findAll() {
 
-        return adminClient.get(ConstantUtils.ETCD_INSTANCE_LIST, ListDirOption(ConstantUtils.ETCD_INSTANCE_LIST));
+        return adminClient.get(
+                ConstantUtils.ETCD_INSTANCE_LIST,
+                ListDirOption(ConstantUtils.ETCD_INSTANCE_LIST), Instance.class
+        );
     }
 
-    public Result insertInstance(String instance) {
+    public Result insert(Instance instance) {
 
-        if(pool.validClient(instance)) {
-            return adminClient.putAndGet(ConstantUtils.ETCD_INSTANCE_LIST + "/" + instance);
+        if(pool.validClient(instance.getUri())) {
+            instance.setHash(instance.getUri().hashCode());
+            String key = ConstantUtils.ETCD_INSTANCE_LIST + "/" + instance.getHash().toString();
+            return adminClient.putAndGet(key, instance);
         }
         return FAILED("客户端校验失败");
+    }
 
+    public Result delete(String hash) {
+        return adminClient.delete(ConstantUtils.ETCD_INSTANCE_LIST + "/" + hash);
     }
 }

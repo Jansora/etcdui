@@ -2,7 +2,7 @@ package com.jansora.etcdui.service;
 
 import com.jansora.etcdui.client.EtcdClient;
 import com.jansora.etcdui.client.EtcdConnectPool;
-import com.jansora.etcdui.utils.ResultUtils;
+import com.jansora.etcdui.utils.BaseUtils;
 import io.etcd.jetcd.ByteSequence;
 import io.etcd.jetcd.options.GetOption;
 import org.springframework.stereotype.Service;
@@ -21,20 +21,12 @@ import javax.annotation.Resource;
  * @since [产品/模块版本] （可选）
  */
 @Service
-public class BaseService extends ResultUtils {
+public class BaseService extends BaseUtils {
 
     @Resource(type = EtcdConnectPool.class)
     protected EtcdConnectPool pool;
 
     protected EtcdClient adminClient = pool.getAdminClient();
 
-    protected GetOption ListDirOption(String key) {
-        ByteSequence key_ = ByteSequence.from(key, UTF_8);
-        GetOption getOption = GetOption.newBuilder().withPrefix(BYTE(key)).build();
-        return getOption;
-    }
 
-    protected static ByteSequence BYTE(String key) {
-        return ByteSequence.from(key, UTF_8);
-    }
 }
