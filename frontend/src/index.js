@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker';
 
 import {BrowserRouter} from 'react-router-dom';
 
+import StoreProvider from "./store/global";
 
 import GlobalColors from "./styled/GlobalColors";
 import GlobalStyle from "./styled/GlobalStyles";
@@ -13,10 +14,12 @@ import GlobalStyle from "./styled/GlobalStyles";
 
 
 ReactDOM.render(
+  <StoreProvider>
+    <GlobalStyle/><GlobalColors/>
     <BrowserRouter>
-        <GlobalStyle/><GlobalColors/>
-        <App/>
-    </BrowserRouter>,
+      <App/>
+    </BrowserRouter>
+  </StoreProvider>,
     document.getElementById('root')
 );
 
