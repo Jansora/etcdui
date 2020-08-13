@@ -25,21 +25,6 @@ const client = axios.create(
   }
 );
 
-const copyToClipboard = (content='拷贝的内容') => {
-  let textArea = document.createElement("textarea");
-  textArea.value = content;
-  document.body.appendChild(textArea);
-  textArea.focus();
-  textArea.select();
-  try {
-    document.execCommand('copy')
-      ? console.log('上传成功, 已拷贝到剪贴板')
-      : console.log('上传失败') ;
-  } catch (err) {
-    console.error('上传成功, 拷贝到剪贴板时执行异常', err);
-  }
-  document.body.removeChild(textArea);
-}
 
 const getDefaultValue = (language) => {
 

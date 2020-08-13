@@ -1,31 +1,29 @@
 import React from 'react';
 
-import Playground from "./layout/playground";
-
-import {Route, Switch, Redirect} from 'react-router-dom'
-
+import {Route, Switch} from 'react-router-dom'
+import Hooks from "./component/hooks";
 import Header from "./layout/header";
 import styled from "styled-components";
-import Embed from "./component/Embed";
+import Instance from "./layout/instance";
 
 const Layout = styled.main`
-  padding-top: ${props => !props.embed ? 'var(--header-height)' : '0px'};
+  padding-top: var(--header-height);
   height: calc(100% - var(--header-height));
   //width: 100%;
-  margin: ${props => !props.embed ? '0 50px' : '0px'};;
+  margin: 0 50px;;
 `;
 
 const App = () => {
-  const embed = Embed()
+
   return (
     <React.Fragment>
-      {!embed && <Header/>}
-        <Layout embed={embed}>
-          <Switch>
-            <Redirect from="/" to={"/java"} exact />
-              <Route path="/:language" component={Playground} exact={false}/>
-          </Switch>
-        </Layout>
+      <Hooks/>
+      <Header/>
+      <Layout >
+        <Switch>
+          <Route path="/:language" component={Instance} exact={false}/>
+        </Switch>
+      </Layout>
 
     </React.Fragment>
   );
