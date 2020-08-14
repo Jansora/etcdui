@@ -60,6 +60,8 @@ export const FindNodes = (uri, key) => {
           }
 
         }).catch( e => {
+        message.error(data.message)
+
       }).finally(()=> { setLoading(false)
       })
     }
@@ -73,17 +75,19 @@ export const FindNodes = (uri, key) => {
 
 export const DeleteDataRequest = (data, callback) => {
 
-  client.delete(`data/delete/${data}`)
+  client.delete(`data/delete?${stringify(data)}`, stringify(data))
     .then(response => {
       const {data} = response;
       if (data.status) {
-
+        message.success("delete completed")
         callback && callback()
       } else {
         message.error(data.message)
       }
 
     }).catch(e => {
+    message.error(data.message)
+
   }).finally(() => {
 
   })
