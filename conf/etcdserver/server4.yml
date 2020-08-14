@@ -3,3 +3,5 @@ wal-dir: /app/data/wal/server4
 
 listen-peer-urls: http://127.0.0.1:44440
 listen-client-urls: http://127.0.0.1:4444
+initial-advertise-peer-urls: http://127.0.0.1:44440
+advertise-client-urls: http://127.0.0.1:4444

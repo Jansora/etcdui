@@ -3,3 +3,5 @@ wal-dir: /app/data/wal/server5
 
 listen-peer-urls: http://127.0.0.1:55550
 listen-client-urls: http://127.0.0.1:5555
+initial-advertise-peer-urls: http://127.0.0.1:55550
+advertise-client-urls: http://127.0.0.1:5555
