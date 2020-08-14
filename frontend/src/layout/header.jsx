@@ -14,38 +14,23 @@ import {Divider} from "antd";
 
 import {NavLink, Link} from "react-router-dom";
 import Theme from "./theme";
+import GetTitle from "../component/hooks/GetTitle";
 
 const Header = (props) => {
 
+  const title = GetTitle();
+
     return (
         <StyledHeader>
-            <StyledHeaderLeft>
-              <NavLink to="/instance">实例管理</NavLink>
-            </StyledHeaderLeft>
+
           <div className="left">
-
-                <Link to={'/'}><Icon name="home"/></Link>
-                <Divider type="vertical" style={{margin: '0 10px'}}/>
-                <NavLink to={"/post"} title={"博客"}>
-                  <Icon name="blogger"/>
-                </NavLink>
-                <Divider type="vertical" style={{margin: '0 10px'}}/>
-                <NavLink to={"/topic"} title={"专栏"}><Icon name="book"/>
-                </NavLink>
-                <Divider type="vertical" style={{margin: '0 10px'}}/>
-                <NavLink to={"/project"} title={"项目"}>
-                  <Icon name="paper plane"/>
-                </NavLink>
-                <Divider type="vertical" style={{margin: '0 10px'}}/>
-                <NavLink to={"/playground"} title={"Playground"}>
-                  <Icon name="code"/>
-                </NavLink>
-
-
+            <NavLink to="/instance" exact={true}>Etcd Nodes</NavLink>
+            <Divider type="vertical" style={{margin: '0 10px'}}/>
+            <NavLink to="/data" exact={false} disabled>Data Manage</NavLink>
           </div>
           <div className="middle">
 
-              <Head>{111}</Head>
+              <Head>{title}</Head>
 
           </div>
           <div className="right">
@@ -60,14 +45,13 @@ const Header = (props) => {
 
                 <Divider type="vertical" style={{margin: '0 16px'}}/>
 
-                <Divider type="vertical" style={{margin: '0 16px'}}/>
-                <Help/>
-
-                <Divider type="vertical" style={{margin: '0 16px'}}/>
-
-
+            <a target="_blank" rel='noopener noreferrer'
+               href={"https://github.com/Jansora/EtcdUI"}
+               style={{float: "right"}}>
+              <Icon name="github" />
+            </a>
           </div>
-          <a target="_blank" rel='noopener noreferrer' href={"https://github.com/Jansora/OnlineCompiler"} style={{float: "right"}}>Github</a>
+
         </StyledHeader>
     )
 }

@@ -7,7 +7,7 @@
 import React, {useState} from 'react';
 
 
-import {Button, Form, Grid, GridColumn, Header, Modal} from "semantic-ui-react";
+import {Button, Form, Grid, GridColumn, Header, Modal, Message} from "semantic-ui-react";
 
 import GetTheme from "../hooks/GetTheme";
 
@@ -32,8 +32,8 @@ const AddInstance = (props) => {
   const args = {
     name, uri
   };
-  const add = () => {
 
+  const add = () => {
     AddInstanceRequest(args, setOpen)
   };
 
@@ -45,10 +45,10 @@ const AddInstance = (props) => {
         open={open}
         onClose={() => setOpen(false)}
         style={{width: "350px"}}
-
+        dimmer="inverted"
       >
         <Header as='h3' attached='top' textAlign="center">
-编辑实例
+新建实例
         </Header>
 
             <Form style={{padding: "1rem"}} loading={loading}>
@@ -58,20 +58,19 @@ const AddInstance = (props) => {
                   required
                   label='标题' placeholder='请输入专栏标题' type='text'
                   value={name} onChange={event => setName(event.target.value)}/>
-              <Form.Input label="url" placeholder="请输入url"
+              <Form.Input label="url" placeholder="请输入连接url"
                           value={uri} onChange={event => setUri(event.target.value)}/>
                 </GridColumn>
               </Grid>
-              <Divider type="horizontal" />
-                 <Button
+              <Divider style={{margin: '20px 0 12px 0'}}/>
+
+              <Button
                     fluid
                     // style={{ height: 114, marginTop: 19, width: '100%'}}
-                    color={GetTheme()} content='创建实例' onClick={() => add()}
+                    color={GetTheme()} content='新建实例' onClick={() => add()}
                 />
 
             </Form>
-
-
 
       </Modal>
 

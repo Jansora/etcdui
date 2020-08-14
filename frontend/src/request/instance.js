@@ -106,32 +106,33 @@ export const FindAllInstances = () => {
 
   const [instances, setInstances] = useState([]);
   const [total, setTotal] = useState([]);
-
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if(loading) {
+      client.get(`instance/findAll`).then(response => {
+        const {data} = response;
+        if (data.status) {
+          setTotal(data.total)
+          setInstances(data.data);
 
-    client.get(`instance/findAllInstances`).then(response => {
-      const {data} = response;
-      if (data.status) {
-        setTotal(data.total)
-        setInstances(data.data);
+          notification.success({
+            message: "Etcd实例-获取Etcd实例列表",
+            description: `共 ${data.data.length} 个Etcd实例`,
+            duration: 2,
+          })
+        } else {
+          message.error(data.message);
+        }
+      }).finally();
+    }
+  }, [loading])
 
-        notification.success({
-          message: "Etcd实例-获取Etcd实例列表",
-          description: `共 ${data.data.length} 个Etcd实例`,
-          duration: 2,
-        })
-      } else {
-        message.error(data.message);
-      }
-    }).finally();
-  }, [])
-
-  return [instances, total];
+  return [instances, total, loading, setLoading];
 };
-export const DeleteInstanceRequest = (hash, callback) => {
+export const DeleteInstanceRequest = (instance, callback) => {
 
-  client.delete(`instance/${hash}`)
+  client.delete(`instance/delete/${instance}`)
     .then(response => {
       const {data} = response;
       if (data.status) {

@@ -5,6 +5,7 @@ import Hooks from "./component/hooks";
 import Header from "./layout/header";
 import styled from "styled-components";
 import Instance from "./layout/instance";
+import Data from "./layout/data";
 
 const Layout = styled.main`
   padding-top: var(--header-height);
@@ -21,7 +22,8 @@ const App = () => {
       <Header/>
       <Layout >
         <Switch>
-          <Route path="/:language" component={Instance} exact={false}/>
+          <Route path="/instance" component={Instance} exact={false}/>
+          <Route path="/data/:uri" component={Data} exact={false}/>
         </Switch>
       </Layout>
 

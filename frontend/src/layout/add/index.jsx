@@ -18,7 +18,7 @@ const Add = () => {
 
         trigger={
           <Icon
-            title='新建'
+            title='Add'
             name='add circle'
             style={{margin: 0}}
           />
@@ -27,7 +27,8 @@ const Add = () => {
         pointing='top left'
       >
         <Dropdown.Menu >
-          <Dropdown.Item onClick={() => setOpenNewInstance(true)} icon='folder open' text='新增 Etcd 实例' />
+          <Dropdown.Item onClick={() => setOpenNewInstance(true)}
+                         icon='folder open' text='Add Nodes' />
 
         </Dropdown.Menu>
       </Dropdown>

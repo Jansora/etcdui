@@ -11,6 +11,7 @@ import StoreProvider from "./store/global";
 import GlobalColors from "./styled/GlobalColors";
 import GlobalStyle from "./styled/GlobalStyles";
 
+import 'antd/dist/antd.min.css'
 
 
 ReactDOM.render(
