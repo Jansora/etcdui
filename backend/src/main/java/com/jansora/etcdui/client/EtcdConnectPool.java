@@ -103,8 +103,8 @@ public class EtcdConnectPool extends BaseUtils {
         EtcdClient client = this.putAndGet(endpoint);
         Result status = client.putAndGet(ConstantUtils.CLIENT_TEST,
                 "", ConstantUtils.ETCD_DEFAULT_VALUE, GetFirstOption(), String.class);
+        if(!status.getStatus()) return status;
+        return client.delete(ConstantUtils.CLIENT_TEST, "");
 
-
-        return status;
     }
 }

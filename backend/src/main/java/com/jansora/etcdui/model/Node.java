@@ -3,6 +3,8 @@ package com.jansora.etcdui.model;
 import lombok.Data;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 /*
  * 〈一句话功能简述〉<br>
  * @file Node.java
@@ -15,7 +17,9 @@ import lombok.ToString;
  */
 @Data
 @ToString
-public class Node {
-    private String path;
+public class Node implements Serializable {
+    private String uri;
+    private String key;
+    private String value;
 
 }

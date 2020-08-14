@@ -39,6 +39,6 @@ public class InstanceService extends BaseService {
 
     public Result delete(String uri) {
 
-        return adminClient.delete(ConstantUtils.ETCD_INSTANCE_LIST, uri);
+        return adminClient.delete(ConstantUtils.ETCD_INSTANCE_LIST, uri.replace("_", "://"));
     }
 }

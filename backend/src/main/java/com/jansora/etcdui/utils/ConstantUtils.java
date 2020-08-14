@@ -18,7 +18,7 @@ public class ConstantUtils {
     /*
        数据挂载根目录
     */
-    private static final String APP = "/ETCDUI";
+    public static final String APP = "/ETCDUI";
 
     /*
        Client TEST

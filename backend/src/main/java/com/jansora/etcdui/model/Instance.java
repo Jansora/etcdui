@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.ToString;
 
 import java.io.Serializable;
-import java.net.URI;
 
 /*
  * 〈一句话功能简述〉<br>

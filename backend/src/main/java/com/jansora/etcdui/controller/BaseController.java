@@ -3,6 +3,7 @@ package com.jansora.etcdui.controller;
 import com.jansora.etcdui.client.AdminClient;
 import com.jansora.etcdui.client.EtcdConnectPool;
 import com.jansora.etcdui.service.BaseService;
+import com.jansora.etcdui.service.DataService;
 import com.jansora.etcdui.service.InstanceService;
 import com.jansora.etcdui.utils.BaseUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,5 +34,8 @@ public class BaseController extends BaseUtils {
 
     @Resource(type = InstanceService.class)
     InstanceService instanceService;
+
+    @Resource(type = DataService.class)
+    DataService dataService;
 
 }

@@ -2,6 +2,7 @@ package com.jansora.etcdui.client;
 
 import com.google.common.annotations.Beta;
 import com.google.gson.Gson;
+import com.jansora.etcdui.model.KVData;
 import com.jansora.etcdui.utils.ConstantUtils;
 import com.jansora.etcdui.utils.Result;
 import com.jansora.etcdui.utils.BaseUtils;
@@ -14,6 +15,7 @@ import io.etcd.jetcd.options.GetOption;
 import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
 import java.util.List;
@@ -42,29 +44,9 @@ public class EtcdClient extends BaseUtils {
 
     protected String endpoint;
 
-    protected static final Gson gson = new Gson();
+    protected KVData kvData;
 
-
-    @Data
-    protected class KVData implements Serializable {
-        private String key;
-        private Object value;
-        private long version;
-
-        private long lease;
-        private long createRevision;
-        private long modRevision;
-        public KVData(KeyValue data, Class clazz) {
-            if (data == null) return;
-            this.key = data.getKey().toString(UTF_8);
-            String value = data.getValue().toString(UTF_8);
-            this.value = gson.fromJson(data.getValue().toString(UTF_8), clazz);
-            this.version = data.getVersion();
-            this.lease = data.getLease();
-            this.createRevision = data.getCreateRevision();
-            this.modRevision = data.getModRevision();
-        }
-    }
+    private static final Gson gson = new Gson();
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EtcdClient.class);
 
@@ -78,10 +60,7 @@ public class EtcdClient extends BaseUtils {
         checkNotNull(key, "key should not be null");
         checkNotNull(value, "option should not be null");
         try {
-
-            ByteSequence key_ = ByteSequence.from((prefix + "/" + key).getBytes());
-            ByteSequence value_ = ByteSequence.from(gson.toJson(value).getBytes());
-            this.kv.put(key_, value_).get();
+            this.kv.put(BYTE(formatKey(prefix, key)), BYTE(gson.toJson(value))).get();
             return SUCCESSFUL();
         } catch (ExecutionException | InterruptedException e) {
             LOGGER.error("EtcdClient put exec failed! key: {}, {}", key, e);
@@ -93,12 +72,14 @@ public class EtcdClient extends BaseUtils {
         checkNotNull(key, "key should not be null");
 
         try {
-            ByteSequence key_ = ByteSequence.from(key.getBytes());
-            GetResponse response = this.kv.get(key_, getOption).get();
+            GetResponse response = this.kv.get(BYTE(formatKey(prefix, key)), getOption).get();
             List<KVData> data =
-                    response.getKvs().stream().map(kv_ -> new KVData(kv_, clazz))
+                    response.getKvs().stream()
+                            .filter(kv_ -> !kv_.getKey().startsWith(BYTE(ConstantUtils.APP)))
+                            .peek(System.out::println)
+                            .map(kv_ -> new KVData(kv_, clazz))
                             .map(kv_ -> {
-                                kv_.setKey(kv_.key.replaceFirst(prefix + "/", ""));
+                                kv_.setKey(kv_.getKey().replaceFirst(prefix + "/", ""));
                                 return kv_;
                             })
                             .collect(Collectors.toList());
@@ -124,7 +105,7 @@ public class EtcdClient extends BaseUtils {
         checkNotNull(key, "key should not be null");
 
         try {
-            ByteSequence key_ = ByteSequence.from((prefix + "/" + key).getBytes());
+            ByteSequence key_ = ByteSequence.from(formatKey(prefix, key).getBytes());
             this.kv.delete(key_).get();
             return SUCCESSFUL();
         } catch (ExecutionException | InterruptedException e) {
@@ -132,6 +113,21 @@ public class EtcdClient extends BaseUtils {
             return FAILED("EtcdClient get exec failed!:");
         }
 
+    }
+
+    protected String formatKey(String prefix,String key) {
+
+        if(!StringUtils.isEmpty(prefix) && !StringUtils.isEmpty(key)) {
+            return prefix + "/" + key;
+        } else {
+            if(!StringUtils.isEmpty(prefix)) {
+                return prefix;
+            }
+            if(!StringUtils.isEmpty(key)) {
+                return key;
+            }
+        }
+        return key;
     }
 
 }
