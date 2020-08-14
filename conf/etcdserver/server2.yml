@@ -1,0 +1,7 @@
+data-dir: /app/data/data/server2
+wal-dir: /app/data/wal/server2
+
+listen-peer-urls: http://127.0.0.1:22220
+listen-client-urls: http://127.0.0.1:2222
+initial-advertise-peer-urls: http://127.0.0.1:22220
+advertise-client-urls: http://127.0.0.1:2222
