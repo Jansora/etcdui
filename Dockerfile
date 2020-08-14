@@ -18,7 +18,7 @@ RUN apt-get install nginx etcd openjdk-8-jdk -y
 RUN mkdir -p ${APP}
 RUN mkdir -p ${APP}/logs
 
-COPY ./backend/target/etcdui-${version}.jar /app/application.jar
+COPY ./backend/target/etcdui-${version}.jar /app/server.jar
 
 COPY ./nginx.conf /etc/nginx/nginx.conf
 
@@ -26,4 +26,4 @@ COPY ./conf /app/conf
 
 WORKDIR ${APP}
 
-CMD ["sh","-c", "bash $APP/conf/etcdserver/start-etcd-server.sh && cd ../../ && service nginx restart && java -jar application.jar"]
+CMD ["sh","-c", "bash $APP/conf/etcdserver/start-etcd-server.sh && service nginx restart && java -jar server.jar"]
