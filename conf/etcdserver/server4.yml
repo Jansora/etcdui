@@ -1,0 +1,5 @@
+data-dir: /app/data/data/server4
+wal-dir: /app/data/wal/server4
+
+listen-peer-urls: http://127.0.0.1:44440
+listen-client-urls: http://127.0.0.1:4444
