@@ -11,7 +11,7 @@ RUN rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update
 
-RUN apt-get install nginx openjdk-8-jdk -y
+RUN apt-get install nginx etcd openjdk-8-jdk -y
 
 
 RUN mkdir -p /app
@@ -24,4 +24,4 @@ COPY ./nginx.conf /etc/nginx/nginx.conf
 
 WORKDIR /app
 
-CMD ["sh","-c", "service nginx restart && java -jar application.jar"]
+CMD ["sh","-c", "service nginx restart && service etcd restart && java -jar application.jar"]

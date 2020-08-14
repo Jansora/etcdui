@@ -32,7 +32,7 @@ public class AdminClient extends EtcdClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(AdminClient.class);
 
     public AdminClient() {
-        super("http://10.243.147.87:2379");
+        super("http://127.0.0.1:2379");
     }
 
     @Override
