@@ -8,11 +8,12 @@
 import React, {useState} from "react";
 import {Grid, Header, Icon, Input, List} from "semantic-ui-react";
 import {useParams} from 'react-router-dom';
-import {AddDataRequest, FindNodes} from "../../request/data";
+import {AddDataRequest, DeleteDataRequest, FindNodes} from "../../request/data";
 import SetTitle from "../../component/hooks/SetTitle";
 import CodeEditor from "../../component/code-editor/CodeEditor";
 import AddData from "../../component/data/AddData";
 import {useDebouncedCallback} from "use-debounce";
+import {message} from "antd";
 
 
 const Data = (props) => {
@@ -63,7 +64,7 @@ const Data = (props) => {
                     <a onClick={() => setOpenNewData(true)} > here</a>
                   </div>
                 </Header>
-                <List selection verticalAlign='middle' size="mini">
+                <List selection verticalAlign='middle' size="mini" loading={loading}>
                   {
                     data.map(d =>  <List.Item key={d.key} onClick={() => {
                       setKey(d.key)
@@ -86,11 +87,16 @@ const Data = (props) => {
                   <div style={{float: "right", color: "rgba(0,0,0,.4)"}}>
                     <a
                             style={{marginRight: 10}}
-                            onClick={() => AddDataRequest({key, value, uri})}
+                            onClick={() => AddDataRequest({key, value, uri}, () => setLoading(true))}
                             > Save </a>
 
                     Needn't this data?  delete id
-                    <a onClick={() => setOpenNewData(true)} > here </a>
+                    <a
+
+                      onClick={() => key != null
+                        ? DeleteDataRequest({key, value, uri})
+                        : message.error("key is null")
+                      } > here </a>
 
                   </div>
 
