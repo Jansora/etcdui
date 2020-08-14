@@ -1,5 +1,6 @@
 package com.jansora.etcdui.service;
 
+import com.jansora.etcdui.client.AdminClient;
 import com.jansora.etcdui.client.EtcdClient;
 import com.jansora.etcdui.client.EtcdConnectPool;
 import com.jansora.etcdui.utils.BaseUtils;
@@ -26,7 +27,8 @@ public class BaseService extends BaseUtils {
     @Resource(type = EtcdConnectPool.class)
     protected EtcdConnectPool pool;
 
-    protected EtcdClient adminClient = EtcdConnectPool.adminClient;
+    @Resource(type = AdminClient.class)
+    AdminClient adminClient;
 
 
 }

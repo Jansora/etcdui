@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 /*
  * 〈一句话功能简述〉<br>
- * @file CommonService.java
- * @description CommonService
+ * @file InstanceService.java
+ * @description InstanceService
  *
  * @author Jansora
  * @date 2020-08-13 16:08
@@ -22,27 +22,23 @@ public class InstanceService extends BaseService {
 
     public Result findAll() {
 
-        EtcdClient adminClient = pool.getAdminClient();
-
         return adminClient.get(
-                ConstantUtils.ETCD_INSTANCE_LIST,
+                ConstantUtils.ETCD_INSTANCE_LIST, "",
                 ListDirOption(ConstantUtils.ETCD_INSTANCE_LIST), Instance.class
         );
     }
 
     public Result insert(Instance instance) {
 
-        if(pool.validClient(instance.getUri())) {
-            instance.setHash(instance.getUri().hashCode());
-            String key = ConstantUtils.ETCD_INSTANCE_LIST + "/" + instance.getHash().toString();
-            return adminClient.putAndGet(key, instance);
+        Result status = pool.validClient(instance.getUri());
+        if(status.getStatus()) {
+            return adminClient.putAndGet(ConstantUtils.ETCD_INSTANCE_LIST, instance.getUri(), instance, GetFirstOption(), Instance.class);
         }
-        return FAILED("客户端校验失败");
+        return FAILED("该实例无法连接, 请重试");
     }
 
-    public Result delete(String hash) {
-        EtcdClient adminClient = pool.getAdminClient();
+    public Result delete(String uri) {
 
-        return adminClient.delete(ConstantUtils.ETCD_INSTANCE_LIST + "/" + hash);
+        return adminClient.delete(ConstantUtils.ETCD_INSTANCE_LIST, uri);
     }
 }

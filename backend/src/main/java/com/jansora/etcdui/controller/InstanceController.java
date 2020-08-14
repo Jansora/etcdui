@@ -34,9 +34,9 @@ public class InstanceController extends BaseController {
         return instanceService.insert(instance);
     }
 
-    @DeleteMapping("delete/{hash}")
-    public Result delete(@PathVariable String hash) {
-        return instanceService.delete(hash);
+    @DeleteMapping("delete/{uri}")
+    public Result delete(@PathVariable String uri) {
+        return instanceService.delete(uri);
     }
 
 }

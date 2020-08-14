@@ -21,6 +21,11 @@ public class ConstantUtils {
     private static final String APP = "/ETCDUI";
 
     /*
+       Client TEST
+    */
+    public static final String CLIENT_TEST = APP + "/CLIENT_TEST";
+
+    /*
        客户端 Etcd 实例列表
     */
     public static final  String ETCD_INSTANCE_LIST = APP + "/INSTANCE_LIST";

@@ -34,7 +34,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since [产品/模块版本] （可选）
  */
 @Beta
-public class EtcdClient {
+public class EtcdClient extends BaseUtils {
 
     protected Client client;
 
@@ -57,6 +57,7 @@ public class EtcdClient {
         public KVData(KeyValue data, Class clazz) {
             if (data == null) return;
             this.key = data.getKey().toString(UTF_8);
+            String value = data.getValue().toString(UTF_8);
             this.value = gson.fromJson(data.getValue().toString(UTF_8), clazz);
             this.version = data.getVersion();
             this.lease = data.getLease();
@@ -73,78 +74,62 @@ public class EtcdClient {
         this.kv = this.client.getKVClient();
     }
 
-    public Result put(String key) {
-        checkNotNull(key, "key should not be null");
-        String value = ConstantUtils.ETCD_DEFAULT_VALUE;
-
-        return this.put(key, value);
-
-    }
-    public Result put(String key, Object value) {
+    public Result put(String prefix, String key, Object value) {
         checkNotNull(key, "key should not be null");
         checkNotNull(value, "option should not be null");
         try {
-            ByteSequence key_ = ByteSequence.from(key.getBytes());
+
+            ByteSequence key_ = ByteSequence.from((prefix + "/" + key).getBytes());
             ByteSequence value_ = ByteSequence.from(gson.toJson(value).getBytes());
             this.kv.put(key_, value_).get();
-            return BaseUtils.SUCCESSFUL();
+            return SUCCESSFUL();
         } catch (ExecutionException | InterruptedException e) {
             LOGGER.error("EtcdClient put exec failed! key: {}, {}", key, e);
-            return BaseUtils.FAILED("EtcdClient put exec failed!");
+            return FAILED("EtcdClient put exec failed!");
         }
 
     }
-    public Result get(String key, GetOption getOption, Class clazz) {
+    public Result get(String prefix, String key, GetOption getOption, Class clazz) {
         checkNotNull(key, "key should not be null");
 
         try {
             ByteSequence key_ = ByteSequence.from(key.getBytes());
             GetResponse response = this.kv.get(key_, getOption).get();
             List<KVData> data =
-                    response.getKvs().stream().map(kv -> new KVData(kv, clazz)).collect(Collectors.toList());
-            return BaseUtils.SUCCESSFUL(data, (long) data.size());
+                    response.getKvs().stream().map(kv_ -> new KVData(kv_, clazz))
+                            .map(kv_ -> {
+                                kv_.setKey(kv_.key.replaceFirst(prefix + "/", ""));
+                                return kv_;
+                            })
+                            .collect(Collectors.toList());
+
+            return SUCCESSFUL(data, (long) data.size());
         } catch (ExecutionException | InterruptedException e) {
             LOGGER.error("EtcdClient get exec failed! key: {}, {}", key, e);
-            return BaseUtils.FAILED("EtcdClient get exec failed!:");
+            return FAILED("EtcdClient get exec failed!:");
         }
 
     }
-    public Result get(String key) {
-        GetOption getOption = GetOption.newBuilder().build();
-        Class clazz = String.class;
-        return this.get(key, getOption, clazz);
-    }
-    public Result get(String key, Class clazz) {
-        GetOption getOption = GetOption.newBuilder().build();
-        return this.get(key, getOption, clazz);
-    }
 
-    public Result putAndGet(String key) {
-        String value = ConstantUtils.ETCD_DEFAULT_VALUE;
-        Result result = this.put(key, value);
+
+    public Result putAndGet(String prefix, String key, Object value, GetOption getOption, Class clazz) {
+        Result result = this.put(prefix, key, value);
         if(result.getStatus()) {
-            return this.get(key);
-        }
-        return result;
-    }
-    public Result putAndGet(String key, Object value) {
-        Result result = this.put(key, value);
-        if(result.getStatus()) {
-            return this.get(key);
+            return this.get(prefix, key, getOption, clazz);
         }
         return result;
     }
 
-    public Result delete(String key) {
+    public Result delete(String prefix,String key) {
         checkNotNull(key, "key should not be null");
 
         try {
-            ByteSequence key_ = ByteSequence.from(key.getBytes());
+            ByteSequence key_ = ByteSequence.from((prefix + "/" + key).getBytes());
             this.kv.delete(key_).get();
-            return BaseUtils.SUCCESSFUL();
+            return SUCCESSFUL();
         } catch (ExecutionException | InterruptedException e) {
             LOGGER.error("EtcdClient delete exec failed! key: {}, {}", key, e);
-            return BaseUtils.FAILED("EtcdClient get exec failed!:");
+            return FAILED("EtcdClient get exec failed!:");
         }
 
     }

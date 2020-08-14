@@ -1,5 +1,8 @@
 package com.jansora.etcdui.client;
 
+import com.jansora.etcdui.utils.BaseUtils;
+import com.jansora.etcdui.utils.ConstantUtils;
+import com.jansora.etcdui.utils.Result;
 import io.etcd.jetcd.Client;
 import lombok.Data;
 import lombok.ToString;
@@ -23,7 +26,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since [产品/模块版本] （可选）
  */
 @Repository
-public class EtcdConnectPool {
+public class EtcdConnectPool extends BaseUtils {
 
     @Data
     @ToString
@@ -48,18 +51,13 @@ public class EtcdConnectPool {
 
     private Integer size = 10;
 
-    public static final EtcdClient adminClient = new EtcdClient("http://10.243.147.87:2379");
+
 
     private final ConcurrentHashMap<String, Node> data = new ConcurrentHashMap<>();
 
     public EtcdConnectPool() { }
     public EtcdConnectPool(Integer size) {
         if(size > 0) this.size = size;
-    }
-
-
-    public EtcdClient getAdminClient() {
-        return adminClient;
     }
 
 
@@ -101,7 +99,12 @@ public class EtcdConnectPool {
         return this.get(endpoint);
     }
 
-    public Boolean validClient(String endpoint) {
-        return this.putAndGet(endpoint) != null;
+    public Result validClient(String endpoint) {
+        EtcdClient client = this.putAndGet(endpoint);
+        Result status = client.putAndGet(ConstantUtils.CLIENT_TEST,
+                "", ConstantUtils.ETCD_DEFAULT_VALUE, GetFirstOption(), String.class);
+
+
+        return status;
     }
 }

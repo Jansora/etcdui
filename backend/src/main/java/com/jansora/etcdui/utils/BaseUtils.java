@@ -1,7 +1,6 @@
 package com.jansora.etcdui.utils;
 
 
-import com.google.gson.Gson;
 import io.etcd.jetcd.ByteSequence;
 import io.etcd.jetcd.options.GetOption;
 
@@ -9,6 +8,10 @@ import static com.google.common.base.Charsets.UTF_8;
 
 public class BaseUtils {
 
+    protected GetOption GetFirstOption() {
+        GetOption getOption = GetOption.newBuilder().build();
+        return getOption;
+    }
     protected GetOption ListDirOption(String key) {
         ByteSequence key_ = ByteSequence.from(key, UTF_8);
         GetOption getOption = GetOption.newBuilder().withPrefix(BYTE(key)).build();

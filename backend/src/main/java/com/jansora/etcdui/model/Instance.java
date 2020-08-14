@@ -11,7 +11,7 @@ import java.net.URI;
  * @file Instance.java
  * @description Instance
  *
- * @author 18044846 张洋源
+ * @author Jansora
  * @date 2020-08-13 17:23
  * @see [相关类/方法]（可选）
  * @since [产品/模块版本] （可选）
@@ -21,7 +21,4 @@ import java.net.URI;
 public class Instance implements Serializable {
     private String name;
     private String uri;
-    private Integer hash;
-    
-
 }
