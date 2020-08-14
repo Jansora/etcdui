@@ -1,3 +1,5 @@
+mkdir -p $APP/data/logs/
+
 nohup /usr/bin/etcd $APP/conf/etcdserver/server.yml >> $APP/data/logs/server.log &
 
 nohup /usr/bin/etcd $APP/conf/etcdserver/server1.yml >> $APP/data/logs/server1.log &

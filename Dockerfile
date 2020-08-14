@@ -26,4 +26,4 @@ COPY ./conf /app/conf
 
 WORKDIR ${APP}
 
-CMD ["sh","-c", "cd ./conf/etcdserver && bash start-etcd-server.sh && cd ../../ && service nginx restart && java -jar application.jar"]
+CMD ["sh","-c", "bash $APP/conf/etcdserver/start-etcd-server.sh && cd ../../ && service nginx restart && java -jar application.jar"]
