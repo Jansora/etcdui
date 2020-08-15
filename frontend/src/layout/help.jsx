@@ -17,7 +17,7 @@ const Help = () => {
       trigger={
         <Icon
           name='help circle'
-          title='主题'
+          title='help'
           style={{margin: 0}}
         />
       }
@@ -25,8 +25,8 @@ const Help = () => {
       pointing='top right'
     >
       <Dropdown.Menu>
-        <Dropdown.Item as={NavLink} to={`/topic/help`}  icon='help circle'  text='帮助文档' />
-        <Dropdown.Item as={NavLink} to={`/topic/help/version`}  icon='gem'  text='版本规划' />
+        <Dropdown.Item as={"a"} target="_blank" href="https://doc.etcdui.jansora.com"  icon='help circle'  text='help document' />
+        <Dropdown.Item as={"a"} target="_blank" href="https://doc.etcdui.jansora.com"   icon='gem'  text='version info' />
       </Dropdown.Menu>
     </Dropdown>
   )

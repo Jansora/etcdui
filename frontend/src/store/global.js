@@ -7,7 +7,7 @@ export const defaultValue = {
     // 主题色
     theme: localStorage.getItem(THEME) ? localStorage.getItem(THEME) : 'violet',
     breadcrumb: [],
-    title: '主页',
+    title: 'HomePage',
 };
 
 export const GlobalStore = createContext(defaultValue);
