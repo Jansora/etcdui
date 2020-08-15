@@ -5,3 +5,5 @@ listen-peer-urls: http://127.0.0.1:2380
 listen-client-urls: http://127.0.0.1:2379
 initial-advertise-peer-urls: http://127.0.0.1:2380
 advertise-client-urls: http://127.0.0.1:2379
+
+initial-cluster: http://127.0.0.1:2380
