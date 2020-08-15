@@ -7,7 +7,7 @@
 import React, {useState} from 'react';
 
 
-import {Button, Form, Grid, GridColumn, Header, Modal, Message} from "semantic-ui-react";
+import {Button, Form, Grid, GridColumn, Header, Modal} from "semantic-ui-react";
 
 import GetTheme from "../hooks/GetTheme";
 
@@ -16,9 +16,6 @@ import {AddInstanceRequest} from "../../request/instance";
 import {Divider} from "antd";
 
 const AddInstance = (props) => {
-
-  const {topic, setTopic} = props;
-
 
   const {open, setOpen} = props;
 
@@ -48,7 +45,7 @@ const AddInstance = (props) => {
         dimmer="inverted"
       >
         <Header as='h3' attached='top' textAlign="center">
-新建实例
+Add Etcd Node
         </Header>
 
             <Form style={{padding: "1rem"}} loading={loading}>
@@ -56,9 +53,9 @@ const AddInstance = (props) => {
                 <GridColumn width={16}>
               <Form.Input
                   required
-                  label='标题' placeholder='请输入专栏标题' type='text'
+                  label='title' placeholder='please input etcd name' type='text'
                   value={name} onChange={event => setName(event.target.value)}/>
-              <Form.Input label="url" placeholder="请输入连接url"
+              <Form.Input label="connect url" placeholder="please input connect url, such as http://127.0.0.1:2379 ?"
                           value={uri} onChange={event => setUri(event.target.value)}/>
                 </GridColumn>
               </Grid>
@@ -67,7 +64,7 @@ const AddInstance = (props) => {
               <Button
                     fluid
                     // style={{ height: 114, marginTop: 19, width: '100%'}}
-                    color={GetTheme()} content='新建实例' onClick={() => add()}
+                    color={GetTheme()} content='Add' onClick={() => add()}
                 />
 
             </Form>

@@ -27,7 +27,7 @@ export const AddDataRequest = (node, callback) => {
     .then(response =>  {
       const { data } = response;
       if (data.status){
-        message.success("保存成功")
+        message.success("saved successfully")
         callback && callback()
       } else {
         message.error(data.message)
@@ -79,7 +79,7 @@ export const DeleteDataRequest = (data, callback) => {
     .then(response => {
       const {data} = response;
       if (data.status) {
-        message.success("delete completed")
+        message.success("deleted successfully")
         callback && callback()
       } else {
         message.error(data.message)
