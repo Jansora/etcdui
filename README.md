@@ -2,10 +2,12 @@
 A Web Client for Etcd.  Base on React Semantic UI and Spring boot. deploy with docker
 
 # Demo
-A live demo here: https://etcdui.jansora.com
+A live demo here: https://etcdui.github.jansora.com/
 
-# document
-https://doc.etcdui.jansora.com
+# how to use it
+1. docker pull jansora/etcui:v1
+2. docker run -it -d --network host --name etcdui ccr.ccs.tencentyun.com/jansora/etcui:v1
+3. via http://localhost:56000 to see it.
 
 # feature
-a easy way to manage your etcd data
+a simple way to manage your etcd data
