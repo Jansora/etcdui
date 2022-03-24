@@ -15,7 +15,7 @@ RUN apt-get update
 RUN apt-get install nginx etcd openjdk-8-jdk -y
 
 
-COPY ./frontend/build /root/dist
+COPY ./frontend/build /dist
 
 COPY ./backend/target/etcdui-${version}.jar /root/server.jar
 
