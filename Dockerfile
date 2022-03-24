@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 
-ENV APP /app
+
 ENV version 1.0.0
 
 RUN apt update && apt install ca-certificates -y
@@ -15,15 +15,14 @@ RUN apt-get update
 RUN apt-get install nginx etcd openjdk-8-jdk -y
 
 
-RUN mkdir -p ${APP}
-RUN mkdir -p ${APP}/logs
+COPY ./frontend/build /root/dist
 
-COPY ./backend/target/etcdui-${version}.jar /app/server.jar
+COPY ./backend/target/etcdui-${version}.jar /root/server.jar
 
 COPY ./nginx.conf /etc/nginx/nginx.conf
 
-COPY ./conf /app/conf
+COPY ./conf /root/conf
 
-WORKDIR ${APP}
+WORKDIR /root
 
-CMD ["sh","-c", "bash $APP/conf/etcdserver/start-etcd-server.sh && service nginx restart && java -jar server.jar"]
+CMD ["sh","-c", "bash /root/conf/etcdserver/start-etcd-server.sh && service nginx restart && java -jar server.jar"]

@@ -1,5 +1,0 @@
-data-dir: /app/data/data/server3
-wal-dir: /app/data/wal/server3
-
-listen-peer-urls: http://127.0.0.1:33330
-listen-client-urls: http://127.0.0.1:3333

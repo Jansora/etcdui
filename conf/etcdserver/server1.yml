@@ -1,6 +1,0 @@
-data-dir: /app/data/data/server1
-wal-dir: /app/data/wal/server1
-
-listen-peer-urls: http://127.0.0.1:11110
-listen-client-urls: http://127.0.0.1:1111
-

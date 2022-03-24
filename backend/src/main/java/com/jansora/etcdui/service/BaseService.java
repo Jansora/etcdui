@@ -1,13 +1,9 @@
 package com.jansora.etcdui.service;
 
 import com.jansora.etcdui.client.AdminClient;
-import com.jansora.etcdui.client.EtcdClient;
 import com.jansora.etcdui.client.EtcdConnectPool;
 import com.jansora.etcdui.utils.BaseUtils;
-import io.etcd.jetcd.ByteSequence;
-import io.etcd.jetcd.options.GetOption;
 import org.springframework.stereotype.Service;
-import static com.google.common.base.Charsets.UTF_8;
 
 import javax.annotation.Resource;
 

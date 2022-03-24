@@ -1,5 +1,5 @@
-data-dir: /app/data/data/server
-wal-dir: /app/data/wal/server
+data-dir: /root/data/data/server
+wal-dir: /root/data/wal/server
 
-listen-peer-urls: http://127.0.0.1:2380
-listen-client-urls: http://127.0.0.1:2379
+listen-peer-urls: http://127.0.0.1:56002
+listen-client-urls: http://127.0.0.1:56001
