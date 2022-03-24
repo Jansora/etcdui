@@ -9,13 +9,10 @@ import static com.google.common.base.Charsets.UTF_8;
 public class BaseUtils {
 
     protected GetOption GetFirstOption() {
-        GetOption getOption = GetOption.newBuilder().build();
-        return getOption;
+        return GetOption.newBuilder().build();
     }
     protected GetOption ListDirOption(String key) {
-        ByteSequence key_ = ByteSequence.from(key, UTF_8);
-        GetOption getOption = GetOption.newBuilder().withPrefix(BYTE(key)).build();
-        return getOption;
+        return GetOption.newBuilder().withPrefix(BYTE(key)).build();
     }
 
     protected static ByteSequence BYTE(String key) {
