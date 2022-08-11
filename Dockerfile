@@ -17,7 +17,7 @@ RUN apt-get install nginx etcd openjdk-8-jdk -y
 
 COPY ./frontend/build /dist
 
-COPY ./backend/target/etcdui-${version}.jar /root/server.jar
+COPY ./backend/target/etcdui-${version}.jar /root/etcdui.jar
 
 COPY ./nginx.conf /etc/nginx/nginx.conf
 
@@ -25,4 +25,4 @@ COPY ./conf /root/conf
 
 WORKDIR /root
 
-CMD ["sh","-c", "bash /root/conf/etcdserver/start-etcd-server.sh && service nginx restart && java -jar server.jar"]
+CMD ["sh","-c", "bash /root/conf/etcdserver/start-etcd-server.sh && service nginx restart && java -jar -Xms128M -Xmx128M etcdui.jar"]
